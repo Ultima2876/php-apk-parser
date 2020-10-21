@@ -20,6 +20,8 @@ class XmlParser
     const RES_TABLE_TYPE              = 0x0002;
     const RES_XML_TYPE                = 0x0003;
 
+	const TAG_NULL = 0x0000;
+	const TAG_DOC_START = 0x0100;
     const TAG_DOC_END = 0x0101;
     const TAG_START = 0x0102;
     const TAG_END = 0x0103;
@@ -35,6 +37,7 @@ class XmlParser
     private $bytes = array();
     private $ready = false;
     private $isUTF8 = false;
+    private $nsNum = 0;
 
     public static $indent_spaces = "                                             ";
 
@@ -126,6 +129,10 @@ class XmlParser
             $nameSi = $this->littleEndianWord($this->bytes, $off + 5 * 4); //itembodysize
 
             switch ($currentTag) {
+                case self::TAG_NULL:
+                    $off += 4;
+                    break;
+                
                 case self::TAG_START:
                     {
                         $tagSix = $this->littleEndianWord($this->bytes, $off + 6 * 4);
@@ -175,11 +182,22 @@ class XmlParser
                         $this->appendXmlIndent($indentCount, "</" . $tagName . ">");
                     }
                     break;
+                    
+                case self::TAG_DOC_START:
+                	{
+                		$off += 6 * 4;
+                		$this->nsNum ++;
+                	}
+                	break;
 
                 case self::TAG_DOC_END:
                     {
-                        $this->ready = true;
-                        break 2;
+                        if ($this->nsNum == 0) {
+                        	$this->ready = true;
+                        	break 2;
+                        }
+                        $this->nsNum --;
+                        $off += 6 * 4;
                     }
                     break;
 
