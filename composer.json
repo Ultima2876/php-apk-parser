@@ -1,5 +1,5 @@
 {
-  "name": "tufanbarisyildirim/php-apk-parser",
+  "name": "ultima2876/php-apk-parser",
   "type": "library",
   "description": "Read basic info about an application from .apk file.",
   "keywords": [
@@ -7,7 +7,7 @@
     "parser",
     "android"
   ],
-  "homepage": "https://github.com/tufanbarisyildirim/php-apk-parser",
+  "homepage": "https://github.com/ultima2876/php-apk-parser",
   "license": "MIT",
   "authors": [
     {
@@ -30,7 +30,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/tufanbarisyildirim/php-apk-parser.git"
+      "url": "https://github.com/ultima2876/php-apk-parser.git"
     }
   ],
   "autoload": {
